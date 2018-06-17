@@ -69,8 +69,8 @@ var getNumArr = function (min, max) {
   var arr = [];
   for (var i = min; i <= max; i++) {
     arr.push(i);
-  };
-  return arr
+  }
+  return arr;
 };
 
 // Вызов случайного элемента из массива
@@ -88,11 +88,6 @@ var getRandomLengthArr = function (arr) {
   return newArr;
 };
 
-// Создание массива индексов, перетасованных в случайном порядке
-var getRandomIndexArr = function (arr) {
-  return getRandomArr(getNumArr(1, arr.length));
-};
-
 // Создание массива с номерами аватарок
 var getAvatarArr = function () {
   return getNumArr(AVATAR_MIN, AVATAR_MAX);
@@ -108,7 +103,7 @@ var createAvatarAdress = function (i) {
   var avatarPhoto = getRandomAvatarArr();
   var avatarNumber = avatarPhoto[i];
   if (avatarNumber < 10) {
-    avatarNumber = '0' + avatarNumber
+    avatarNumber = '0' + avatarNumber;
   }
   return START_AVATAR_SRC + avatarNumber + END_AVATAR_SRC;
 };
@@ -144,7 +139,7 @@ var getOfferInfo = function () {
       }
     };
     newOffer.push(randomOffer);
-  };
+  }
   return newOffer;
 };
 
@@ -157,7 +152,7 @@ var createPinElement = function (pin) {
   pinAvatarElement.src = pin.author.avatar;
   pinAvatarElement.alt = pin.offer.title;
   return pinElement;
-}
+};
 
 // Заполнение карты DOM-элементами на основе массива объявлений
 var fillMap = function () {
@@ -165,7 +160,7 @@ var fillMap = function () {
   for (var i = 0; i < offers.length; i++) {
     fragment.appendChild(createPinElement(offers[i]));
     pinsLocationElement.appendChild(fragment);
-  };
+  }
 };
 
 // Удаление потомков
