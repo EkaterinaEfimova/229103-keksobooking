@@ -30,7 +30,6 @@ var PHOTO_WIDTH = 45;
 var PHOTO_HEIGHT = 40;
 
 var avatarIndexArr = [];
-var avatarRandomIndexes = [];
 var offers = [];
 
 // Переменные для поиска элементов в разметке и создание массивов
@@ -46,7 +45,7 @@ var typeElement = cadrTemplateElement.querySelector('.popup__type');
 // Создание активного режима карты
 var getActiveStatus = function () {
   mapsElement.classList.remove('map--faded');
-}
+};
 
 // Вывод случайного числа от min до max
 var randomInteger = function (min, max) {
@@ -71,13 +70,13 @@ var getNumArr = function (min, max) {
   for (var i = min; i <= max; i++) {
     arr.push(i);
   };
-  return arr;
+  return arr
 };
 
 // Вызов случайного элемента из массива
 var getRandomIndex = function (arr) {
   return arr[Math.floor(Math.random() * arr.length)];
-}
+};
 
 // Создание массива произвольной длины на базе исходного массива
 var getRandomLengthArr = function (arr) {
@@ -91,13 +90,7 @@ var getRandomLengthArr = function (arr) {
 
 // Создание массива индексов, перетасованных в случайном порядке
 var getRandomIndexArr = function (arr) {
-  var RandomIndexArr = getNumArr(1, arr.length);
-  return getRandomArr(RandomIndexArr());
-};
-
-// Создание массива со случайным порядком заголовков
-var getTitleRandom = function (arr) {
-  return getRandomArr(TITLE);
+  return getRandomArr(getNumArr(1, arr.length));
 };
 
 // Создание массива с номерами аватарок
@@ -172,7 +165,7 @@ var fillMap = function () {
   for (var i = 0; i < offers.length; i++) {
     fragment.appendChild(createPinElement(offers[i]));
     pinsLocationElement.appendChild(fragment);
-  }
+  };
 };
 
 // Удаление потомков
