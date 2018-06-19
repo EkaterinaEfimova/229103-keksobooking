@@ -111,10 +111,10 @@ var createAvatarAdress = function (i) {
 var createPhotoArr = function () {
   var offerPhotos = [];
   for (var j = MIN_PHOTO; j <= MAX_PHOTO; j++) {
-    offerPhotos.push(START_PHOTO_SRC + j + END_PHOTO_SRC)
-  };
+    offerPhotos.push(START_PHOTO_SRC + j + END_PHOTO_SRC);
+  }
   return offerPhotos;
-}
+};
 
 // Создание массива объявлений
 var createOfferInfo = function () {
@@ -194,7 +194,7 @@ var identifyHousingType = function (ad) {
     default:
       typeElement.textContent = 'Дворец';
   }
-}
+};
 
 // Заполнение родительского элемента дочерними
 var fillParentElement = function (items, tag, Classname, parentElement) {
