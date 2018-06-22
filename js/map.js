@@ -159,9 +159,14 @@ var createPinElement = function (pin) {
   pinElement.style.top = pin.location.y - PIN_HEIGHT + 'px';
   pinAvatarElement.src = pin.author.avatar;
   pinAvatarElement.alt = pin.offer.title;
-  pinElement.addEventListener('click', function() {
-  openPopup();
-});
+  pinElement.addEventListener('click', function () {
+    openPopup();
+  });
+  pinElement.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === ENTER_KEYCODE) {
+    openPopup();
+    }
+  });
   return pinElement;
 };
 
@@ -252,18 +257,20 @@ var renderAdPopupElement = function (ad) {
 };
 
 // Точка входа в программу
-var create = function () {
+/*var create = function () {
   setActiveStatus();
   offers = createOfferInfo();
   fillMap();
   renderAdPopupElement(offers[1]);
-};
+};*/
 
 // Модуль module4-task1
 
 var map = document.querySelector('.map');
 var mainPin = map.querySelector('.map__pin--main');
-var pins = map.querySelectorAll('.map__pin');
+
+var ENTER_KEYCODE = 13;
+var ESC_KEYCODE = 27;
 
 var form = document.querySelector('.ad-form');
 var formFieldset = form.querySelectorAll('fieldset');
@@ -273,7 +280,6 @@ var PIN_ARROW_HEIGTH = 22;
 var mainPinStartX = Math.round(mainPin.offsetLeft + mainPin.offsetWidth / 2);
 var mainPinStartY = Math.round(mainPin.offsetTop + mainPin.offsetHeight / 2);
 var mainPinStartActiveY = Math.round(mainPin.offsetTop + mainPin.offsetHeight + PIN_ARROW_HEIGTH);
-var buttonClose = document.querySelector('.popup__close');
 
 
 // Блокировка полей формы
@@ -282,7 +288,7 @@ var addBlockForm = function () {
     formFieldset[i].setAttribute('disabled', 'disabled');
   };
   inputAdress(mainPinStartX, mainPinStartY);
-};
+}
 
 // Разблокировка формы
 var unblockForm = function () {
@@ -290,7 +296,7 @@ var unblockForm = function () {
     formFieldset[i].removeAttribute('disabled');
   };
   form.classList.remove('ad-form--disabled');
-};
+}
 
 // Разблокировка карты
 var activeMap = function () {
@@ -331,6 +337,12 @@ var openPopup = function () {
 // Закрытие попапа
 map.addEventListener('click', function (evt) {
   if (evt.target.classList.contains('popup__close')) {
+    closePopup();
+  }
+});
+
+map.addEventListener('keydown', function(evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
     closePopup();
   }
 });
