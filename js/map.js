@@ -46,9 +46,9 @@ var photosListElement = cadrTemplateElement.querySelector('.popup__photos');
 var typeElement = cadrTemplateElement.querySelector('.popup__type');
 
 // Создание активного режима карты
-var setActiveStatus = function () {
-  mapsElement.classList.remove('map--faded');
-};
+// var setActiveStatus = function () {
+// mapsElement.classList.remove('map--faded');
+// };
 
 // Вывод случайного числа от min до max
 var randomInteger = function (min, max) {
@@ -164,7 +164,7 @@ var createPinElement = function (pin) {
   });
   pinElement.addEventListener('keydown', function (evt) {
     if (evt.keyCode === ENTER_KEYCODE) {
-    openPopup();
+      openPopup();
     }
   });
   return pinElement;
@@ -257,7 +257,7 @@ var renderAdPopupElement = function (ad) {
 };
 
 // Точка входа в программу
-/*var create = function () {
+/* var create = function () {
   setActiveStatus();
   offers = createOfferInfo();
   fillMap();
@@ -286,17 +286,17 @@ var mainPinStartActiveY = Math.round(mainPin.offsetTop + mainPin.offsetHeight + 
 var addBlockForm = function () {
   for (var i = 0; i < formFieldset.length; i++) {
     formFieldset[i].setAttribute('disabled', 'disabled');
-  };
+  }
   inputAdress(mainPinStartX, mainPinStartY);
-}
+};
 
 // Разблокировка формы
 var unblockForm = function () {
   for (var i = 0; i < formFieldset.length; i++) {
     formFieldset[i].removeAttribute('disabled');
-  };
+  }
   form.classList.remove('ad-form--disabled');
-}
+};
 
 // Разблокировка карты
 var activeMap = function () {
@@ -341,7 +341,7 @@ map.addEventListener('click', function (evt) {
   }
 });
 
-map.addEventListener('keydown', function(evt) {
+map.addEventListener('keydown', function (evt) {
   if (evt.keyCode === ESC_KEYCODE) {
     closePopup();
   }
