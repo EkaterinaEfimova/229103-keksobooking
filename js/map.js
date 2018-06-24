@@ -243,7 +243,7 @@ var createAdPopupElement = function (ad) {
   adPopupElement.querySelector('.popup__text--address').textContent = ad.offer.address;
   adPopupElement.querySelector('.popup__text--price').textContent = ad.offer.price + ' ₽/ночь';
   adPopupElement.querySelector('.popup__text--capacity').textContent = ad.offer.rooms + ' комнаты для ' + offers[1].offer.guests + ' гостей';
-  adPopupElement.querySelector('.popup__text--time').textContent = 'Заезд после' + ad.offer.checkin + ', выезд до' + ad.offer.checkout;
+  adPopupElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + ad.offer.checkin + ', выезд до ' + ad.offer.checkout;
   adPopupElement.querySelector('.popup__description').textContent = ad.offer.description;
   adPopupElement.querySelector('.popup__avatar').src = ad.author.avatar;
   return adPopupElement;
@@ -349,3 +349,100 @@ map.addEventListener('keydown', function (evt) {
 
 
 addBlockForm();
+
+// Модуль module4-task2
+
+var titleOffer = form.querySelector('#title');
+var typeOffer = form.querySelector('#type');
+var priceOffer = form.querySelector('#price');
+var timeInOffer = form.querySelector('#timein');
+var timeOutOffer = form.querySelector('#timeout');
+var roomsOffer = form.querySelector('#room_number');
+var capacityOffer = form.querySelector('#capacity');
+var submitForm = form.querySelector('.ad-form__submit');
+
+var MIN_PRICE_BUNGALO = 0;
+var MIN_PRICE_FLAT = 1000;
+var MIN_PRICE_HOUSE = 5000;
+var MIN_PRICE_PALACE = 10000;
+
+var BORDER_COLOR_ERROR = '#ff6547';
+var BORDER_COLOR_CORRECT = '#d9d9d3';
+
+// Изменение минимальной цены и подсказки в поле ввода цены в зависимости от типа жилья
+
+var typeSelectChangeHendler = function () {
+  switch (typeOffer.value) {
+    case ('bungalo'):
+      priceOffer.min = MIN_PRICE_BUNGALO;
+      priceOffer.placeholder = MIN_PRICE_BUNGALO;
+      break;
+    case ('flat'):
+      priceOffer.min = MIN_PRICE_FLAT;
+      priceOffer.placeholder = MIN_PRICE_FLAT;
+      break;
+    case ('house'):
+      priceOffer.min = MIN_PRICE_HOUSE;
+      priceOffer.placeholder = MIN_PRICE_HOUSE;
+      break;
+    default:
+      priceOffer.min = MIN_PRICE_PALACE;
+      priceOffer.placeholder = MIN_PRICE_PALACE;
+  }
+};
+
+typeOffer.addEventListener('change', typeSelectChangeHendler);
+
+// Синхронизация времени заезда и выезда
+
+var timeInChangeHendler = function () {
+  timeOutOffer.value = timeInOffer.value;
+}
+
+var timeOutChangeHendler = function () {
+  timeInOffer.value = timeOutOffer.value;
+}
+
+timeInOffer.addEventListener('change', timeInChangeHendler);
+
+timeOutOffer.addEventListener('change', timeOutChangeHendler);
+
+// Проверка корректного значения гостей в зависимости от колличества комнат
+
+var checkCapacityValidate = function () {
+  var rooms = roomsOffer.value;
+  var capacity = capacityOffer.value;
+
+  if (rooms === '1' && capacity !== '1') {
+    capacityOffer.setCustomValidity('1 комната доступна только для одного гостя');
+  } else if (rooms === '2' && (capacity === '0' || capacity === '3')) {
+    capacityOffer.setCustomValidity('2 комнаты доступна для одного или двух гостей');
+  } else if (rooms === '3' && (capacity === '0')) {
+    capacityOffer.setCustomValidity('3 комнаты подходят для одного, двух или трех гостей');
+  } else if (rooms === '100' && capacity !== '0') {
+    capacityOffer.setCustomValidity('100 комнат - не для гостей');
+  } else {
+    capacityOffer.setCustomValidity('');
+  }
+};
+
+// Проверка значений полей и вывод информации об ошибке
+
+var checkFields = [titleOffer, priceOffer, capacityOffer];
+
+var checkRequiredInputs = function (fields) {
+  for (var i = 0; i < fields.length; i++) {
+    if (fields[i].checkValidity() === false) {
+      fields[i].style.borderColor = BORDER_COLOR_ERROR;
+    } else {
+      fields[i].style.borderColor = BORDER_COLOR_CORRECT;
+    }
+  }
+};
+
+var adFormSubmitClickHandler = function () {
+  checkCapacityValidate();
+  checkRequiredInputs(checkFields);
+};
+
+submitForm.addEventListener('click', adFormSubmitClickHandler);
