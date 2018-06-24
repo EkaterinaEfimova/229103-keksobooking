@@ -397,11 +397,11 @@ typeOffer.addEventListener('change', typeSelectChangeHendler);
 
 var timeInChangeHendler = function () {
   timeOutOffer.value = timeInOffer.value;
-}
+};
 
 var timeOutChangeHendler = function () {
   timeInOffer.value = timeOutOffer.value;
-}
+};
 
 timeInOffer.addEventListener('change', timeInChangeHendler);
 
