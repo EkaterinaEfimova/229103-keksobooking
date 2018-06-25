@@ -279,7 +279,7 @@ var adressField = form.querySelector('#address');
 var PIN_ARROW_HEIGTH = 22;
 var mainPinStartX = Math.round(mainPin.offsetLeft + mainPin.offsetWidth / 2);
 var mainPinStartY = Math.round(mainPin.offsetTop + mainPin.offsetHeight / 2);
-var mainPinStartActiveY = Math.round(mainPin.offsetTop + mainPin.offsetHeight + PIN_ARROW_HEIGTH);
+// var mainPinStartActiveY = Math.round(mainPin.offsetTop + mainPin.offsetHeight + PIN_ARROW_HEIGTH);
 
 
 // Блокировка полей формы
@@ -309,10 +309,10 @@ var activePage = function () {
   activeMap();
   offers = createOfferInfo();
   fillMap();
-  //inputAdress(mainPinStartX, mainPinStartActiveY);
+  // inputAdress(mainPinStartX, mainPinStartActiveY);
 };
 
-//mainPin.addEventListener('mouseup', activePage);
+// mainPin.addEventListener('mouseup', activePage);
 
 // Подстановка координат в поле адрес
 var inputAdress = function (x, y) {
@@ -491,7 +491,7 @@ mainPin.addEventListener('mousedown', function (evt) {
 
     var mainPinCoordX = Math.round(coordPinX + mainPin.offsetWidth / 2);
     var mainPinCoordY = Math.round(coordPinY + mainPin.offsetHeight + PIN_ARROW_HEIGTH);
-    
+
     inputAdress(mainPinCoordX, mainPinCoordY);
   };
 
