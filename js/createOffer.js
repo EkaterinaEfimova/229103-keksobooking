@@ -29,7 +29,6 @@
 
 
   var avatarIndexArr = [];
-  var offers = [];
 
   // Создание массива с номерами аватарок
   var createAvatarArr = function () {
@@ -93,6 +92,6 @@
   };
 
   window.createOffer = {
-  	createOfferInfo: createOfferInfo
+    createOfferInfo: createOfferInfo
   };
 })();

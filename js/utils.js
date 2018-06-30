@@ -42,10 +42,10 @@
   };
 
   window.utils = {
-  	randomInteger: randomInteger,
-  	shuffleArr: shuffleArr,
-  	createNumArr: createNumArr,
-  	getRandomIndex: getRandomIndex,
-  	createRandomLengthArr: createRandomLengthArr
+    randomInteger: randomInteger,
+    shuffleArr: shuffleArr,
+    createNumArr: createNumArr,
+    getRandomIndex: getRandomIndex,
+    createRandomLengthArr: createRandomLengthArr
   };
 })();

@@ -13,18 +13,14 @@
 
   var PIN_WIDTH = 50;
   var PIN_HEIGHT = 70;
+  var PIN_ARROW_HEIGTH = 22;
   var PHOTO_WIDTH = 45;
   var PHOTO_HEIGHT = 40;
 
   var map = document.querySelector('.map');
   var mainPin = map.querySelector('.map__pin--main');
-  var pinActive = map.querySelector('.map__pin');
-  var ENTER_KEYCODE = 13;
   var ESC_KEYCODE = 27;
 
-  var PIN_ARROW_HEIGTH = 22;
-  var mainPinStartX = Math.round(mainPin.offsetLeft + mainPin.offsetWidth / 2);
-  var mainPinStartY = Math.round(mainPin.offsetTop + mainPin.offsetHeight / 2);
   var offers = window.createOffer.createOfferInfo();
 
   // Создание DOM-элемента метки на карте
@@ -144,7 +140,7 @@
     window.form.unblockForm();
     activeMap();
     fillMap();
-    };
+  };
 
   // Функция для удаления созданной карточки объявления
   var deleteOldPopup = function () {
@@ -155,25 +151,16 @@
     }
   };
 
-  // Функция для закрытия карточки объявления с описанием
-  var closeCardPopup = function () {
-    var cardCloseButton = map.querySelector('.popup__close');
-
-    cardCloseButton.addEventListener('click', function () {
-      deleteOldPopup();
-    });
-  };
-
   // Открытие попапа
   map.addEventListener('click', function (evt) {
     var target;
-    if(evt.target.classList.contains('map__pin')){
+    if (evt.target.classList.contains('map__pin')) {
       target = evt.target.querySelector('.popuper');
 
     } else {
       target = evt.target;
     }
-    if (target.classList.contains('popuper')){
+    if (target.classList.contains('popuper')) {
       renderAdPopupElement(target);
     }
   });

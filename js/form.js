@@ -123,8 +123,8 @@
   submitForm.addEventListener('click', adFormSubmitClickHandler);
 
   window.form = {
-  	addBlockForm: addBlockForm,
-  	unblockForm: unblockForm,
-  	inputAdress: inputAdress
+    addBlockForm: addBlockForm,
+    unblockForm: unblockForm,
+    inputAdress: inputAdress
   }
 })();
