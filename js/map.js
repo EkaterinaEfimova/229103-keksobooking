@@ -13,12 +13,10 @@
 
   var PIN_WIDTH = 50;
   var PIN_HEIGHT = 70;
-  var PIN_ARROW_HEIGTH = 22;
   var PHOTO_WIDTH = 45;
   var PHOTO_HEIGHT = 40;
 
   var map = document.querySelector('.map');
-  var mainPin = map.querySelector('.map__pin--main');
   var ESC_KEYCODE = 27;
 
   var offers = window.createOffer.createOfferInfo();

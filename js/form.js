@@ -126,5 +126,5 @@
     addBlockForm: addBlockForm,
     unblockForm: unblockForm,
     inputAdress: inputAdress
-  }
+  };
 })();
