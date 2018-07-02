@@ -147,7 +147,7 @@
     document.addEventListener('keydown', closeSuccessEsc);
     document.addEventListener('click', closeSuccess);
 
-    window.backend.uploadData(new FormData(form), function (data, loadHandler) {
+    window.backend.uploadData(new FormData(form), function (data) {
       successSendForm.classList.remove('hidden');
 
       resetClickHandler();
