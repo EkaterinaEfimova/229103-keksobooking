@@ -4,14 +4,13 @@
   // Переменные для поиска элементов в разметке и создание массивов
   var pinsLocationElement = document.querySelector('.map__pins');
   var map = document.querySelector('.map');
-  var pins = map.querySelectorAll('.map__pin');
   var pinTemplateElement = document.querySelector('template').content.querySelector('.map__pin');
   var cadrTemplateElement = document.querySelector('template').content.querySelector('.map__card');
   var mapFiltersContainerElement = map.querySelector('.map__filters-container');
   var featuresListElement = cadrTemplateElement.querySelector('.popup__features');
   var photosListElement = cadrTemplateElement.querySelector('.popup__photos');
   var typeElement = cadrTemplateElement.querySelector('.popup__type');
-  
+
   var PIN_WIDTH = 50;
   var PIN_HEIGHT = 70;
   var PHOTO_WIDTH = 45;
@@ -136,13 +135,11 @@
   var activePage = function () {
     window.form.unblockForm();
     activeMap();
-    window.backend.downloadData(function (data) { 
+    window.backend.downloadData(function (data) {
       offers = data;
-      data.forEach(createPinElement); 
-      fillMap(); 
-    }, function (error) { 
-      console.log(error); 
-    });
+      data.forEach(createPinElement);
+      fillMap();
+    }, window.backend.errorHandler);
   };
 
 
@@ -189,7 +186,7 @@
       }
     }
   });
-  
+
   // Удаление класса map__pin--active у меток
   var deleteActiveClass = function () {
     var activePin = map.querySelector('.map__pin--active');
@@ -198,12 +195,12 @@
       activePin.classList.remove('map__pin--active');
     }
   };
-  
+
   // Удаление пинов
   var deletePin = function () {
     var pinsElements = pinsLocationElement.querySelectorAll('.map__pin:not(.map__pin--main)');
-      for (var i = 0; i < pinsElements.length; i++) {
-        pinsLocationElement.removeChild(pinsElements[i]);
+    for (var i = 0; i < pinsElements.length; i++) {
+      pinsLocationElement.removeChild(pinsElements[i]);
     }
   };
 

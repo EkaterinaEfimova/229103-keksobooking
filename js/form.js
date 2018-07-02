@@ -16,7 +16,6 @@
   var successSendForm = document.querySelector('.success');
   var map = document.querySelector('.map');
   var mainPin = map.querySelector('.map__pin--main');
-  var pins = map.querySelectorAll('.map__pin');
   var mainPinStartX = Math.round(mainPin.offsetLeft + mainPin.offsetWidth / 2);
   var mainPinStartY = Math.round(mainPin.offsetTop + mainPin.offsetHeight / 2);
   var mainPinCoordStartX = 537;
@@ -114,7 +113,7 @@
 
   var checkRequiredInputs = function (fields) {
     for (var i = 0; i < fields.length; i++) {
-      !fields[i].checkValidity() ? fields[i].style.borderColor = BORDER_COLOR_ERROR : fields[i].style.borderColor = BORDER_COLOR_CORRECT;
+      fields[i].style.borderColor = !fields[i].checkValidity() ? BORDER_COLOR_ERROR : BORDER_COLOR_CORRECT;
     }
   };
 
@@ -148,7 +147,7 @@
     document.addEventListener('keydown', closeSuccessEsc);
     document.addEventListener('click', closeSuccess);
 
-    window.backend.uploadData(new FormData(form), function (data, loadHandler, errorHandler) {
+    window.backend.uploadData(new FormData(form), function (data, loadHandler) {
       successSendForm.classList.remove('hidden');
 
       resetClickHandler();

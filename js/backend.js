@@ -5,6 +5,7 @@
   var URL_DOWNLOAD_DATA = 'https://js.dump.academy/keksobooking/data';
   var URL_UPLOAD_DATA = 'https://js.dump.academy/keksobooking';
   var TIMEOUT = 15000;
+  var ESC_KEYCODE = 27;
 
   var HttpResponseCodes = {
     SUCCESS: 200,
