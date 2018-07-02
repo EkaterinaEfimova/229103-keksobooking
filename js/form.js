@@ -12,10 +12,15 @@
   var submitForm = form.querySelector('.ad-form__submit');
   var formFieldset = form.querySelectorAll('fieldset');
   var adressField = form.querySelector('#address');
+  var resetButton = form.querySelector('.ad-form__reset');
+  var successSendForm = document.querySelector('.success');
   var map = document.querySelector('.map');
   var mainPin = map.querySelector('.map__pin--main');
+  var pins = map.querySelectorAll('.map__pin');
   var mainPinStartX = Math.round(mainPin.offsetLeft + mainPin.offsetWidth / 2);
   var mainPinStartY = Math.round(mainPin.offsetTop + mainPin.offsetHeight / 2);
+  var mainPinCoordStartX = 537;
+  var mainPinCoordStartY = 375;
 
   var MIN_PRICE_BUNGALO = 0;
   var MIN_PRICE_FLAT = 1000;
@@ -24,6 +29,8 @@
 
   var BORDER_COLOR_ERROR = '#ff6547';
   var BORDER_COLOR_CORRECT = '#d9d9d3';
+
+  var ESC_KEYCODE = 27;
 
   // Подстановка координат в поле адрес
   var inputAdress = function (x, y) {
@@ -49,7 +56,7 @@
   };
 
   // Изменение минимальной цены и подсказки в поле ввода цены в зависимости от типа жилья
-  var typeSelectChangeHendler = function () {
+  var typeSelectChangeHandler = function () {
     switch (typeOffer.value) {
       case ('bungalo'):
         priceOffer.min = MIN_PRICE_BUNGALO;
@@ -69,20 +76,20 @@
     }
   };
 
-  typeOffer.addEventListener('change', typeSelectChangeHendler);
+  typeOffer.addEventListener('change', typeSelectChangeHandler);
 
   // Синхронизация времени заезда и выезда
-  var timeInChangeHendler = function () {
+  var timeInChangeHandler = function () {
     timeOutOffer.value = timeInOffer.value;
   };
 
-  var timeOutChangeHendler = function () {
+  var timeOutChangeHandler = function () {
     timeInOffer.value = timeOutOffer.value;
   };
 
-  timeInOffer.addEventListener('change', timeInChangeHendler);
+  timeInOffer.addEventListener('change', timeInChangeHandler);
 
-  timeOutOffer.addEventListener('change', timeOutChangeHendler);
+  timeOutOffer.addEventListener('change', timeOutChangeHandler);
 
   // Проверка корректного значения гостей в зависимости от колличества комнат
   var checkCapacityValidate = function () {
@@ -107,20 +114,60 @@
 
   var checkRequiredInputs = function (fields) {
     for (var i = 0; i < fields.length; i++) {
-      if (fields[i].checkValidity() === false) {
-        fields[i].style.borderColor = BORDER_COLOR_ERROR;
-      } else {
-        fields[i].style.borderColor = BORDER_COLOR_CORRECT;
-      }
+      !fields[i].checkValidity() ? fields[i].style.borderColor = BORDER_COLOR_ERROR : fields[i].style.borderColor = BORDER_COLOR_CORRECT;
     }
   };
 
-  var adFormSubmitClickHandler = function () {
+  var formSubmitClickHandler = function () {
     checkCapacityValidate();
     checkRequiredInputs(checkFields);
   };
 
-  submitForm.addEventListener('click', adFormSubmitClickHandler);
+  submitForm.addEventListener('click', formSubmitClickHandler);
+
+  // Кнопка сброса
+  var resetClickHandler = function () {
+    form.reset();
+
+    map.classList.add('map--faded');
+    form.classList.add('ad-form--disabled');
+    window.map.deletePin();
+    window.map.deleteOldPopup();
+    typeSelectChangeHandler();
+    mainPin.style.left = mainPinCoordStartX + 'px';
+    mainPin.style.top = mainPinCoordStartY + 'px';
+
+  };
+
+  resetButton.addEventListener('click', resetClickHandler);
+
+  // Отправка формы
+  form.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+
+    document.addEventListener('keydown', closeSuccessEsc);
+    document.addEventListener('click', closeSuccess);
+
+    window.backend.uploadData(new FormData(form), function (data, loadHandler, errorHandler) {
+      successSendForm.classList.remove('hidden');
+
+      resetClickHandler();
+
+    }, window.backend.errorHandler);
+
+  });
+
+  var closeSuccessEsc = function (evtClose) {
+    if (evtClose.keyCode === ESC_KEYCODE) {
+      closeSuccess();
+    }
+  };
+
+  var closeSuccess = function () {
+    successSendForm.classList.add('hidden');
+    document.removeEventListener('keydown', closeSuccessEsc);
+    document.removeEventListener('click', closeSuccess);
+  };
 
   window.form = {
     addBlockForm: addBlockForm,
