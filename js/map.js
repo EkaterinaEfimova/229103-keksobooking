@@ -4,44 +4,22 @@
   // Переменные для поиска элементов в разметке и создание массивов
   var pinsLocationElement = document.querySelector('.map__pins');
   var map = document.querySelector('.map');
-  var pinTemplateElement = document.querySelector('template').content.querySelector('.map__pin');
+  
   var cadrTemplateElement = document.querySelector('template').content.querySelector('.map__card');
   var mapFiltersContainerElement = map.querySelector('.map__filters-container');
   var featuresListElement = cadrTemplateElement.querySelector('.popup__features');
   var photosListElement = cadrTemplateElement.querySelector('.popup__photos');
   var typeElement = cadrTemplateElement.querySelector('.popup__type');
 
-  var PIN_WIDTH = 50;
-  var PIN_HEIGHT = 70;
+
   var PHOTO_WIDTH = 45;
   var PHOTO_HEIGHT = 40;
 
   var ESC_KEYCODE = 27;
   var ENTER_KEYCODE = 13;
-  var offers;
+  var offers = [];
 
-  // Создание DOM-элемента метки на карте
-  var createPinElement = function (pin) {
-    var pinElement = pinTemplateElement.cloneNode(true);
-    var pinAvatarElement = pinElement.querySelector('img');
-    pinElement.style.left = pin.location.x - (PIN_WIDTH / 2) + 'px';
-    pinElement.style.top = pin.location.y - PIN_HEIGHT + 'px';
-    pinAvatarElement.src = pin.author.avatar;
-    pinAvatarElement.alt = pin.offer.title;
-    pinAvatarElement.classList.add('popuper');
-    pinAvatarElement.offer = pin.offer;
 
-    return pinElement;
-  };
-
-  // Заполнение карты DOM-элементами на основе массива объявлений
-  var fillMap = function () {
-    var fragment = document.createDocumentFragment();
-    for (var i = 0; i < offers.length; i++) {
-      fragment.appendChild(createPinElement(offers[i]));
-      pinsLocationElement.appendChild(fragment);
-    }
-  };
 
   // Удаление потомков
   var deleteChildElement = function (parent) {
@@ -131,15 +109,15 @@
     map.classList.remove('map--faded');
   };
 
+  var dataSuccessHandler = function (offers) {
+    window.render.fillMap(offers);
+  };
+
   // Перевод страницы в активное состояние и добавление похожих объявлений
   var activePage = function () {
     window.form.unblockForm();
     activeMap();
-    window.backend.downloadData(function (data) {
-      offers = data;
-      data.forEach(createPinElement);
-      fillMap();
-    }, window.backend.errorHandler);
+    window.backend.downloadData(dataSuccessHandler, window.backend.errorHandler);
   };
 
 
@@ -223,6 +201,7 @@
     checkMapActive: checkMapActive,
     activePage: activePage,
     deleteOldPopup: deleteOldPopup,
-    deletePin: deletePin
+    deletePin: deletePin,
+    deleteChildElement: deleteChildElement
   };
 })();
